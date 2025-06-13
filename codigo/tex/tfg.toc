@@ -1,0 +1,33 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{Resumen}{\es@scroman {iii}}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Introducción: el riesgo en las coporaciones}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Valor a Riesgo (VaR)}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Ventajas y desventajas del VaR}{2}{subsection.1.1.1}%
+\contentsline {section}{\numberline {1.2}Expected Shorfall (ES) o Valor a Riesgo Condicional (CVaR)}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Ventajas y desventajas del ES}{2}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Interés de las medidas de riesgo}{3}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}VaR y ES orientado a carteras de valores}{3}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}VaR y ES orientado a inversiones inmobiliarias}{3}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}VaR y ES orientadas a corporaciones}{4}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}VaR y ES orientado a predicciones de impago en créditos}{4}{subsection.1.3.4}%
+\contentsline {chapter}{\numberline {2}Modelos de riesgo}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Modelos tradicionales}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Regresión cuantil}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Regresión expectil}{7}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Modelos basados en Machine Learning}{9}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Redes Neuronales}{9}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Algoritmos de Boosting}{12}{subsection.2.2.2}%
+\contentsline {chapter}{\numberline {3}Aplicaciones de modelos a datos de créditos}{15}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Medidas de riesgo}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}VaR}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}CoVar}{18}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Déficit esperado (Expected Shotfall)}{18}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Modelos de riesgo}{19}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Modelos clásicos}{20}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Modelo GARCH}{20}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Modelos de aprendizaje automático}{22}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Modelo XGBoost}{22}{subsection.4.4.4}%
+\contentsline {chapter}{\numberline {5}Aplicación de QR y XGBoost a ...}{27}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Análisis de resultados}{29}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Conclusión}{31}{chapter.7}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{33}{section*.3}%
