@@ -133,7 +133,7 @@ class QuantileNeuralNetworkOptimized:
             'all_results': results
         }
         
-        print(f"✅ Mejores parámetros para quantile {quantile}:")
+        print(f"Mejores parámetros para quantile {quantile}:")
         for key, value in best_params.items():
             print(f"  {key}: {value}")
         print(f"Score: {best_score:.4f}")
