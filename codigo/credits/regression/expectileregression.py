@@ -143,7 +143,8 @@ class ER:
         for expectile in self.models.keys():
             score = self.score_with_train(expectile)
             print(f"Expectile {expectile}: {score}")
-
+            
+##Métodos utilizados unicamente para datasets de prueba
     def plot(self, X, y):
         plt.figure(figsize=(10, 6))
         plt.scatter(X, y, color='blue', label='Data')

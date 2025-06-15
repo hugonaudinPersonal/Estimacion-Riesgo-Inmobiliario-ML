@@ -74,7 +74,7 @@ class QR:
             score = self.score_with_test(alpha)
             print(f"Pinball loss for alpha with test {alpha}: {score}")
             
-    
+##Métodos utilizados unicamente para datasets de prueba
     def plot(self, alpha):
         xx = np.atleast_2d(np.linspace(0, 10, 1000)).T
         fig = plt.figure(figsize=(10, 10))

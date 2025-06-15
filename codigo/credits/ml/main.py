@@ -1,5 +1,6 @@
 from quantileboosting import QBR
 from expectileboosting import EBR
+from neuralnetwork import QuantileNeuralNetworkOptimized
 import numpy as np
 from sklearn.datasets import fetch_california_housing
 
@@ -25,6 +26,8 @@ if __name__ == "__main__":
     #Entrenamiento del modelo
     credit.fit(0.95)
     credit.predict(0.95)
+
+
     #credit.plot(0.95)
 
     credit.fit(0.5)

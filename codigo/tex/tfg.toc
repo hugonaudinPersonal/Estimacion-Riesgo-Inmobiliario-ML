@@ -16,7 +16,7 @@
 \contentsline {subsection}{\numberline {2.1.2}Regresión expectil}{7}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}Modelos basados en Machine Learning}{9}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Redes Neuronales}{9}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Algoritmos de Boosting}{12}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.2}Algoritmos de Boosting}{13}{subsection.2.2.2}%
 \contentsline {chapter}{\numberline {3}Aplicaciones de modelos a datos de créditos}{15}{chapter.3}%
 \contentsline {chapter}{\numberline {4}Medidas de riesgo}{17}{chapter.4}%
 \contentsline {section}{\numberline {4.1}VaR}{17}{section.4.1}%

@@ -110,7 +110,7 @@ urlcolor=black]{hyperref}
 \null
 \vfill
 
-\Huge{\bfseries Técnicas de aprendizaje autonático aplicadas a la estimación del Valor a Riesgo y otras medidas de riesgo financiero}
+\Huge{\bfseries Técnicas de aprendizaje automático aplicadas a la estimación del Valor a Riesgo y otras medidas de riesgo financiero}
 
 \vfill
 
@@ -572,7 +572,7 @@ y cumple lo siguiente:
 
 \begin{proposition}
    Dado $ES_\alpha$ el Expected Shortfall de una variable aleatoria $X$ de grado $\alpha$, 
-   podemos expresarlo en funcion de $e_\tau$ el expectil ($ES_\tau = g(e_\tau)$) con 
+   podemos expresarlo en funcion de $e_\tau$ el expectil ($ES_\alpha = g(e_\tau)$) con 
    $e_\tau$ cumpliendo $P(X \leq e_\tau) = \alpha$. 
 \end{proposition}
 \begin{proof}
@@ -699,7 +699,7 @@ Para hacer una explicación completa pero sencila, tomaremos una red neuronal co
 una sola capa oculta totalmente conectada. Las entradas $x_{i} \; i= 1, 2, \dots, n$ son 
 transformadas mediante pesos y una función llamada función de activación y transportadas 
 a la siguiente neurona, la cual está en la capa oculta. Acto seguido, se repetirá el proceso 
-entre la capa oculta y la capa de salida pero utilizando $Z_i \; i= 1, 2, \dots, M_1$ como 
+entre la capa oculta y la capa de salida pero utilizando $Z_j \; j= 1, 2, \dots, M_1$ como 
 entradas.
 
 \begin{figure}[h]
@@ -712,16 +712,17 @@ entradas.
 Para cada neurona de la capa oculta, transformamos todos los valores de las neuronas 
 de la capa de entrada de la siguiente manera:
 \begin{align*}
-    a_j^{(1)} &= \sum_{i=1}^n w_{j,i}^{(1)}x_i+b_{j,}^{(1)}\\
-    Z_j^{(1)} &= \sigma(a_j)\:, j = 1, 2, \dots M_1
+    a_j^{(1)} &= \sum_{i=1}^n w_{j,i}^{(1)}x_i+b_{j}^{(1)}\\
+    Z_j^{(1)} &= \sigma(a_j^{(1)})\:, j = 1, 2, \dots M_1
 \end{align*}
 con $\sigma$ la función de activación y $w_{j,i}$ los pesos asociados a cada neurona, 
 además de un peso de la propia neurona receptora, llamada sesgo $b_{j}$. En caso de 
 haber más  capas ocultas repitiriamos este proceso:
 \begin{align*}
-    Z_j^{(m)} = \sigma\left(\sum_{i = 1}^{M_{(m-1)}}w_{j,i}^{(m)}Z_i^{(m-1)}+b_{j}^m\right)
+    Z_j^{(m)} = \sigma\left(\sum_{i = 1}^{M_{(m-1)}}w_{j,i}^{(m)}Z_i^{(m-1)}+b_{j}^{(m)}\right)
 \end{align*}
-En este el caso de la figura~\ref{fig:miImagen}, la salida de la red neuronal será:
+En este el caso de la figura~\ref{fig:miImagen}, al solo tener una capa oculta, la salida de la red 
+neuronal será:
 \begin{align*}
 \hat{y}_k = \sigma\left(\sum_{i=1}^{M_1} w_{k,i}^{(2)}Z_i^{(1)}+b_{k}^{(2)}\right)
 \end{align*}
@@ -745,58 +746,91 @@ de métodos es la función ReLu:
 \end{align*}
 
 
-Para ajustar los pesos, utilizaremos el algoritmo de retropropagación (backpropagation), que 
+Para ajustar los pesos, utilizaremos el algoritmo de retropropagación (*backpropagation*), que 
 se basa en el cálculo del gradiente de la función de pérdida con respecto a los pesos.
-Calculamos el gradiente de la función de pérdida con respecto a los pesos de la 
-capa de salida y luego propagamos este gradiente hacia atrás a través de la red para
-ajustar los pesos de las capas ocultas. Los errores en cada capa serán:
+Sin embargo, en lugar de utilizar el método del gradiente descendente clásico, cuyo uso es sencillo 
+y fácil de comprender, vamos a emplear el algoritmo \textit{Adam} (Adaptive Moment Estimation), 
+que utiliza estimaciones adaptativas de la media y la varianza del gradiente para actualizar los 
+parámetros de manera más eficiente.
 
+
+Dado el gradiente de la función de pérdida con respecto a los pesos de la capa $l$, que denotamos 
+por $g^{(l)} = \frac{\partial \mathcal{L}}{\partial \theta}= -\sum_{i=1}^n \rho'\left(y_i - \hat{y}_i\right) \cdot \frac{\partial \hat{y}_i}{\partial \theta}$, 
+Adam calcula una estimación del primer momento (media) y  del segundo momento  (varianza) del 
+gradiente mediante las siguientes ecuaciones:
 \begin{align*}
-   \delta^{(L)} &= \nabla_{\hat{y}_i} \rho(y_i - \hat{y}_i)\\
-   \delta^{(l)} &= \left( w^{(l+1) \, T} \delta^{(l+1)} \right) \circ \sigma'^{(l)}(a^{(l)}) = \left( w^{(l+1)\, T} \delta^{(l+1)} \right) \circ 1_{a^{(l)} > 0}\quad \text{para } l = L-1, \dots, 1
+   m^{(l)} &\gets \beta_1 m^{(l)} + (1 - \beta_1) g^{(l)} \\
+   v^{(l)} &\gets \beta_2 v^{(l)} + (1 - \beta_2) (g^{(l)})^2\\
+   m_b^{(l)} &\gets \beta_1 m_b^{(l)} + (1 - \beta_1) g_b^{(l)} \\
+v_b^{(l)} &\gets \beta_2 v_b^{(l)} + (1 - \beta_2) (g_b^{(l)})^2 
 \end{align*}
-con $\circ$ el producto elemento a elemento (Hadamard) y:
+A continuación, se realiza una corrección del sesgo de estas estimaciones, importante en las 
+primeras iteraciones:
 \begin{align*}
-    \left[\mathbf{1}_{a^{(l)} > 0}\right]_j =
-    \begin{cases}
-        1 & \text{si } a_j^{(l)} > 0 \\
-        0 & \text{si } a_j^{(l)} \leq 0
-    \end{cases}
+   \hat{m}^{(l)} &= \frac{m^{(l)}}{1 - (\beta_1)^t} \quad \hat{v}^{(l)} = \frac{v^{(l)}}{1 - (\beta_2)^t}\\
+   \hat{m}_b^{(l)} &= \frac{m_b^{(l)}}{1 - (\beta_1)^t} \quad \hat{v}_b^{(l)} = \frac{v_b^{(l)}}{1 - (\beta_2)^t}
 \end{align*}
-Utilizando estos errores, actualizaremos lo pesos y los sesgos de la red neuronal teniendo 
-en cuenta un valor llamado tasa de aprendizaje $\zeta$, que determina la magnitud de los
-ajustes en cada iteración. Suponemos, por tanto, que tenemos $m$ datos disponibles 
+Finalmente, se actualizan los pesos y el sesgo
+\begin{align*}
+   w^{(l)} \gets w^{(l)} - \zeta \cdot \frac{\hat{m}^{(l)}}{\sqrt{\hat{v}^{(l)}} + \epsilon}\\
+   b^{(l)} \gets b^{(l)} - \zeta \cdot \frac{\hat{m}_b^{(l)}}{\sqrt{\hat{v}_b^{(l)}} + \epsilon}
+\end{align*}
+donde $\zeta$ es la tasa de aprendizaje, $\beta_1$ y $\beta_2$ son los coeficientes de
+decaimiento para los momentos (típicamente 0.9 y 0.999), $\epsilon$ es un pequeño valor positivo
+para evitar divisiones entre 0 y $t$ es la iteración actual.
+
+Suponemos, por tanto, que tenemos $m$ datos disponibles 
 $(\mathbf{x_1}, y_1), (\mathbf{x_2}, y_2), \dots, (\mathbf{x_m}, y_m)$, donde $\mathbf{x_i}$ 
 son las variables explicativas y $y_i$ la variable dependiente. El algormitmo será:\\
 
 \begin{algorithm}[H]
-   \caption{Red neuronal}
-   Inicializar aleatoriamente los pesos $w^{(l)}$ y sesgos $b^{(l)}$ para $l = 1, \dots, L$\;
-   \For{$\tau = 1$ \KwTo $T$}{
+   \caption{Red neuronal (Estructura Correcta)}
+   \SetKwInOut{Input}{Entrada}
+   \SetKwInOut{Output}{Salida}
+
+   \tcp*[h]{Inicialización}\;
+   Inicializar aleatoriamente los pesos $w^{(l)}$, sesgos $b^{(l)}$, y momentos $m^{(l)}, v^{(l)}, m_b^{(l)}, v_b^{(l)}$ para $l = 1, \dots, L$\;
+   $t \gets 0$\;
+
+   \tcp*[h]{Bucle de entrenamiento}\;
+   \For{epoch = 1 \KwTo T}{
        \For{$i = 1$ \KwTo $m$}{
-           \tcp*[l]{Propagación hacia adelante}
+           $t \gets t + 1$\;
+           
+           \tcp*[l]{1. Propagación hacia adelante}
            $Z^{(0)} \gets \mathbf{x}_i$\;
-           \For{$l = 1$ \KwTo $L-1$}{
+           \For{$l = 1$ \KwTo $L$}{
                $a^{(l)} \gets w^{(l)} Z^{(l-1)} + b^{(l)}$\;
                $Z^{(l)} \gets \sigma^{(l)}(a^{(l)})$\;
            }
-           $a^{(L)} \gets w^{(L)} Z^{(L-1)} + b^{(L)}$\;
-           $\hat{y}_i \gets a^{(L)}$\;
-   
-           \tcp*[l]{Cálculo del error de salida}
-           $\delta^{(L)} \gets \nabla_{\hat{y}_i} \rho(y_i - \hat{y}_i)$\;
-   
-           \tcp*[l]{Retropropagación}
-           \For{$l = L$ \KwTo $2$}{
-               $w^{(l)} \gets w^{(l)} - \zeta \cdot \delta^{(l)} (Z^{(l-1)})^T$\;
-               $b^{(l)} \gets b^{(l)} - \zeta \cdot \delta^{(l)}$\;
-               $\delta^{(l-1)} \gets (w^{(l)})^T \delta^{(l)} \circ \mathbf{1}_{a^{(l-1)} > 0}$\;
+           $\hat{y}_i \gets Z^{(L)}$\;
+
+           \tcp*[l]{2. Retropropagación (Cálculo de gradientes)}
+           $\delta^{(L)} \gets \frac{\partial \mathcal{L}}{\partial \hat{y}_i} \cdot \sigma^{(L)'}(a^{(L)})$\;
+           $g^{(L)} \gets \delta^{(L)} (Z^{(L-1)})^T$; \quad $g_b^{(L)} \gets \delta^{(L)}$\;
+           \For{$l = L-1$ \KwTo $1$}{
+               $\delta^{(l)} \gets ((w^{(l+1)})^T \delta^{(l+1)}) \circ \sigma^{(l)'}(a^{(l)})$\;
+               $g^{(l)} \gets \delta^{(l)} (Z^{(l-1)})^T$; \quad $g_b^{(l)} \gets \delta^{(l)}$\;
            }
-           $w^{(1)} \gets w^{(1)} - \zeta \cdot \delta^{(1)} (Z^{(0)})^T$\;
-           $b^{(1)} \gets b^{(1)} - \zeta \cdot \delta^{(1)}$\;
+
+           \tcp*[l]{3. Actualización de parámetros (Optimizador Adam)}
+           \For{$l = 1$ \KwTo $L$}{
+               \tcp*[l]{Actualizar momentos}
+               $m^{(l)} \gets \beta_1 m^{(l)} + (1 - \beta_1) g^{(l)}$; \quad $m_b^{(l)} \gets \beta_1 m_b^{(l)} + (1 - \beta_1) g_b^{(l)}$\;
+               $v^{(l)} \gets \beta_2 v^{(l)} + (1 - \beta_2) (g^{(l)})^2$; \quad $v_b^{(l)} \gets \beta_2 v_b^{(l)} + (1 - \beta_2) (g_b^{(l)})^2$\;
+               
+               \tcp*[l]{Corregir sesgos de los momentos}
+               $\hat{m}^{(l)} \gets \frac{m^{(l)}}{1 - \beta_1^t}$; \quad $\hat{m}_b^{(l)} \gets \frac{m_b^{(l)}}{1 - \beta_1^t}$\;
+               $\hat{v}^{(l)} \gets \frac{v^{(l)}}{1 - \beta_2^t}$; \quad $\hat{v}_b^{(l)} \gets \frac{v_b^{(l)}}{1 - \beta_2^t}$\;
+               
+               \tcp*[l]{Actualizar parámetros}
+               $w^{(l)} \gets w^{(l)} - \zeta \frac{\hat{m}^{(l)}}{\sqrt{\hat{v}^{(l)}} + \epsilon}$\;
+               $b^{(l)} \gets b^{(l)} - \zeta \frac{\hat{m}_b^{(l)}}{\sqrt{\hat{v}_b^{(l)}} + \epsilon}$\;
+           }
        }
    }
-   \end{algorithm}
+\end{algorithm}
+
 \hfil\\
 Una de sus principales ventajas es su simplicidad computacional y su capacidad para 
 evitar el problema del gradiente desvanecido en regiones positivas, lo que mejora 

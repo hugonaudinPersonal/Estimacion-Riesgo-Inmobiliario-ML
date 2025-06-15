@@ -1,2 +1,3 @@
 https://medium.com/@joachimiak.krzysztof/expectile-regression-an-alternative-for-quantile-regression-48298fb6eaa0
 https://users.ox.ac.uk/~mast0315/ExpectilesVaR&ES.pdf -> en la demostración del ES la utilizo citarlo
+https://logongas.es/lib/exe/fetch.php?media=clase:iabd:pia:2eval:the_math_behind_adam_optimizer.pdf

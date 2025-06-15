@@ -1,5 +1,6 @@
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.model_selection import train_test_split, HalvingRandomSearchCV
+from sklearn.experimental import enable_halving_search_cv
+from sklearn.model_selection import train_test_split, HalvingRandomSearchCV 
 from sklearn.metrics import make_scorer, mean_pinball_loss
 from sklearn.datasets import fetch_california_housing
 import matplotlib.pyplot as plt
@@ -74,7 +75,7 @@ class QBR:
             score = self.score_with_test(alpha)
             print(f"Pinball loss for alpha with test {alpha}: {score}")
             
-#   
+##Métodos utilizados unicamente para datasets de prueba
     def plot(self, alpha):
        xx = np.atleast_2d(np.linspace(0, 10, 1000)).T
        plt.plot(xx, f(xx), "g:", linewidth=3, label=r"$f(x) = x\,\sin(8x)-2$")
