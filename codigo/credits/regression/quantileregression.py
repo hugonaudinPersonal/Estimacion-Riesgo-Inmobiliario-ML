@@ -58,6 +58,10 @@ class QR:
         self.predictions_test[alpha] = prediction
         prediction = self.models[alpha].predict(self.X_train)
         self.predictions_train[alpha] = prediction
+
+    def predict(self, alpha, X):
+        prediction = self.models[alpha].predict(X)
+        return prediction
     
     def score_with_test(self, alpha: float):
         score = mean_pinball_loss(self.y_test, self.predictions_test[alpha], alpha=alpha)

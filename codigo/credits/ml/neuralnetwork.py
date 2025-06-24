@@ -180,6 +180,13 @@ class QuantileNeuralNetworkOptimized:
         
         return self.predictions_test[quantile]
     
+    def predict(self, alpha, X):
+        if alpha not in self.models:
+            raise ValueError(f"Model for quantile {alpha} not trained yet")
+        
+        model = self.models[alpha]
+        prediction = model.predict(X, verbose=0)
+        return prediction
 
     def score_with_test(self, quantile: float):
         score = mean_pinball_loss(self.y_test, self.predictions_test[quantile], alpha=quantile)

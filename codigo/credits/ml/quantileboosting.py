@@ -20,7 +20,7 @@ class QBR:
 
         
     def neg_mean_pinball_loss(self, alpha):
-        return make_scorer(mean_pinball_loss, alpha=alpha,greater_is_better=False, )
+        return make_scorer(mean_pinball_loss, alpha=alpha, greater_is_better=False, )
     
     def fit(self, alpha: float):
         learning_rate = np.arange(0.01, 0.31, 0.01)
@@ -59,6 +59,10 @@ class QBR:
         self.predictions_test[alpha] = prediction
         prediction = self.models[alpha].predict(self.X_train)
         self.predictions_train[alpha] = prediction
+
+    def predict(self, alpha:float, X):
+        prediction = self.models[alpha].predict(X)
+        return prediction
     
     def score_with_test(self, alpha: float):
         score = mean_pinball_loss(self.y_test, self.predictions_test[alpha], alpha=alpha)

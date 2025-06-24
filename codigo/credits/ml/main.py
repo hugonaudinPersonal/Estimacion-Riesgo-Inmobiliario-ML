@@ -19,8 +19,8 @@ if __name__ == "__main__":
     #noise = rng.lognormal(sigma=sigma) - np.exp(sigma**2 / 2)
     #y = y + noise
     data = fetch_california_housing()
-    #X = data.data
-    #y = data.target
+    X = data.data
+    y = data.target
 
     credit = QBR(X, y)
     #Entrenamiento del modelo
@@ -37,10 +37,11 @@ if __name__ == "__main__":
     credit.fit(0.05)
     credit.predict(0.05)
     #credit.plot(0.05)
+    credit.scores()
 
     credit.plot_all()
 
-    credit.scores()
+    
 
 
     

@@ -81,6 +81,10 @@ class EBR:
         prediction = self.models[expectile].predict(self.X_train)
         self.predictions_train[expectile] = prediction
 
+    def predict(self, expectile, X): 
+        prediction = self.models[expectile].predict(X)
+        return prediction
+
     def score_with_test(self, expectile: float):
         errors = self.y_test - self.predictions_test[expectile]
         return np.mean(np.where(errors < 0, 1 - expectile, expectile) * errors ** 2)
