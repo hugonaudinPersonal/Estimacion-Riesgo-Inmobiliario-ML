@@ -120,7 +120,7 @@ if __name__ == "__main__":
 
     new_house = [73, 3, 1, 5, 40.418395, -3.677125, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0]
 
-    #df = pd.read_csv("/home/hugonaudin/Documentos/UNI/24-25/TFG/codigo/credits/rental_data/cleaned_rental_data.csv", sep=',', encoding='utf-8-sig')
+    #df = pd.read_csv("rental_data/cleaned_rental_data.csv", sep=',', encoding='utf-8-sig')
     #y = df["precio"]
     #X = df.drop(columns=["precio"]).values
 ##
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     #    print(f"{quantile_type}: {score}")
    
 
-    df = pd.read_csv("/home/hugonaudin/Documentos/UNI/24-25/TFG/codigo/credits/rental_data/outlierless.csv", sep=',', encoding='utf-8-sig')
+    df = pd.read_csv("rental_data/outlierless.csv", sep=',', encoding='utf-8-sig')
     
     y = df["precio"]
     X = df.drop(columns=["precio"]).values
